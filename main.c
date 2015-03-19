@@ -37,8 +37,8 @@
 /* Private define ------------------------------------------------------------*/
 /* Evalboard I/Os configuration */
 
-#define LED_GPIO_PORT  (GPIOH)
-#define LED_GPIO_PINS  (GPIO_PIN_3 | GPIO_PIN_2 | GPIO_PIN_1 | GPIO_PIN_0)
+#define LED_GPIO_PORT  (GPIOD)
+#define LED_GPIO_PINS  (GPIO_PIN_0)
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/

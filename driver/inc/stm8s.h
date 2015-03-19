@@ -84,7 +84,8 @@
  #define _RAISONANCE_
 #elif defined(__ICCSTM8__)
  #define _IAR_
-#elif defined(__SDCC__)
+#elif defined(__SDCC)
+ #define _IAR_
  #define _SDCC_
 #else
  #error "Unsupported Compiler!"          /* Compiler defines not found */
@@ -2731,8 +2732,10 @@ CFG_TypeDef;
  #define trap()                {_asm("trap\n");} /* Trap (soft IT) */
  #define wfi()                 {_asm("wfi\n");}  /* Wait For Interrupt */
  #define halt()                {_asm("halt\n");} /* Halt */
-#else /*_IAR_*/
- #include <intrinsics.h>
+#else /*_IAR_ || _SDCC_*/
+ #if !defined(_SDCC_)
+  #include <intrinsics.h>
+ #endif
  #define enableInterrupts()    __enable_interrupt()   /* enable interrupts */
  #define disableInterrupts()   __disable_interrupt()  /* disable interrupts */
  #define rim()                 __enable_interrupt()   /* enable interrupts */
