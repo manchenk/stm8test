@@ -46,7 +46,7 @@
  /* #define STM8AF626x */    /*!< STM8A Medium density devices */
  /* #define STM8AF622x */    /*!< STM8A Low density devices */
  /* #define STM8S103 */      /*!< STM8S Low density devices */
-#define STM8S003       /*!< STM8S Value Line Low density devices */
+ /* #define STM8S003 */      /*!< STM8S Value Line Low density devices */
  /* #define STM8S903 */      /*!< STM8S Low density devices */
 
 /*   Tip: To avoid modifying this file each time you need to switch between these
@@ -85,7 +85,6 @@
 #elif defined(__ICCSTM8__)
  #define _IAR_
 #elif defined(__SDCC)
- #define _IAR_
  #define _SDCC_
 #else
  #error "Unsupported Compiler!"          /* Compiler defines not found */
@@ -140,7 +139,13 @@
   /*!< Used with memory Models for code less than 64K */
   #define MEMCPY memcpy
  #endif /* STM8S208 or STM8S207 or STM8S007 or STM8AF62Ax or STM8AF52Ax */ 
-#else /*_IAR_*/
+#elif defined (_IAR) /*_IAR_*/
+ #define FAR  __far
+ #define NEAR __near
+ #define TINY __tiny
+ #define EEPROM __eeprom
+ #define CONST  const
+#else /*_SDCC_*/
  #define FAR  __far
  #define NEAR __near
  #define TINY __tiny
@@ -2769,11 +2774,20 @@ CFG_TypeDef;
  __interrupt void (a) (void)  
 #endif /* _IAR_ */
 
+#ifdef _SDCC_
+ #define INTERRUPT_HANDLER(a,b) void a(void) __interrupt (b)
+ #define INTERRUPT_HANDLER_TRAP(a) void a(void) __interrupt (1)
+#endif
 /*============================== Interrupt Handler declaration ========================*/
 #ifdef _COSMIC_
  #define INTERRUPT @far @interrupt
+ #define __INTERRUPT
 #elif defined(_IAR_)
  #define INTERRUPT __interrupt
+ #define __INTERRRUPT
+#elif defined(_SDCC_)
+ #define INTERRUPT
+ #define __INTERRUPT __interrupt
 #endif /* _COSMIC_ */
 
 /*============================== Handling bits ====================================*/
