@@ -40,16 +40,16 @@ all: default
 DRVSRC = stm8s_beep.c stm8s_exti.c stm8s_i2c.c stm8s_rst.c stm8s_tim2.c stm8s_tim5.c stm8s_uart2.c stm8s_wwdg.c \
          stm8s_flash.c stm8s_itc.c stm8s_spi.c stm8s_tim3.c stm8s_tim6.c stm8s_uart3.c \
          stm8s_awu.c stm8s_clk.c stm8s_gpio.c stm8s_iwdg.c stm8s_tim1.c stm8s_tim4.c stm8s_uart1.c 
-ifeq (($(CPU),STM8S105) OR ($(CPU),STM8S005) OR ($(CPU),STM8S103) OR ($(CPU),STM8S003) OR ($(CPU),STM8S903) OR ($(CPU),STM8AF626x) OR ($(CPU),STM8AF622x))
+ifneq ($(findstring $(CPU),STM8S105 STM8S005 STM8S103 STM8S003 STM8S903 STM8AF626x STM8AF622x),)
 DRVSRC += stm8s_adc1.c
 endif
-ifeq (($(CPU),STM8S208) OR ($(CPU),STM8S207) OR ($(CPU),STM8S007) OR ($(CPU),STM8AF52Ax) OR ($(CPU),STM8AF62Ax))
+ifneq ($(findstring $(CPU),STM8S208 STM8S207 STM8S007 STM8AF52Ax STM8AF62Ax),)
 DRVSRC += stm8s_adc2.c
 endif
 ifeq ($(CPU),STM8AF622x)
 DRVSRC += stm8s_uart4.c
 endif
-ifeq (($(CPU),STM8S208) OR ($(CPU),STM8AF52Ax))
+ifneq ($(findstring $(CPU),STM8S208 STM8AF52Ax),)
 DRVSRC += stm8s_can.c
 endif
 
@@ -59,7 +59,7 @@ HEADERS = $(wildcard *.h) $(wildcard $(DRVINCPATH)/*.h)
 
 # compile all *c files
 $(OBJDIR)/%.rel: %.c $(HEADERS)
-	$(CC) -D$(CPU) $(CFLAGS) -I./ -I./$(DRVINC) -c $< -o $@
+	$(CC) -D$(CPU) $(CFLAGS) -I./ -I./$(DRVINCPATH) -c $< -o $@
 
 # link all object files and libaries
 $(TARGET): $(OBJECTS)
