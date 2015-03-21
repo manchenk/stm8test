@@ -27,6 +27,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm8s.h"
+#include "stm8s_it.h"
 
 /**
   * @addtogroup GPIO_Toggle
@@ -63,7 +64,7 @@ void main(void)
   {
     /* Toggles LEDs */
     GPIO_WriteReverse(LED_GPIO_PORT, (GPIO_Pin_TypeDef)LED_GPIO_PINS);
-    Delay(0xFFFF);
+    Delay(0x3FFF);
   }
 
 }

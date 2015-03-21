@@ -1,0 +1,9 @@
+*.cdb
+*.lst
+*.rel
+*.rst
+*.ihx
+*.hex
+*.sym
+*.asm
+tags

@@ -146,8 +146,8 @@
  #define EEPROM __eeprom
  #define CONST  const
 #else /*_SDCC_*/
- #define FAR  __far
- #define NEAR __near
+ #define FAR
+ #define NEAR
  #define TINY __tiny
  #define EEPROM __eeprom
  #define CONST  const
@@ -2776,18 +2776,21 @@ CFG_TypeDef;
 
 #ifdef _SDCC_
  #define INTERRUPT_HANDLER(a,b) void a(void) __interrupt (b)
- #define INTERRUPT_HANDLER_TRAP(a) void a(void) __interrupt (1)
+ #define INTERRUPT_HANDLER_TRAP(a) void a(void) __interrupt
 #endif
 /*============================== Interrupt Handler declaration ========================*/
 #ifdef _COSMIC_
  #define INTERRUPT @far @interrupt
  #define __INTERRUPT
+ #define __TRAP
 #elif defined(_IAR_)
  #define INTERRUPT __interrupt
  #define __INTERRRUPT
+ #define __TRAP
 #elif defined(_SDCC_)
  #define INTERRUPT
- #define __INTERRUPT __interrupt
+ #define __INTERRUPT(a) __interrupt (a)
+ #define __TRAP __trap
 #endif /* _COSMIC_ */
 
 /*============================== Handling bits ====================================*/
